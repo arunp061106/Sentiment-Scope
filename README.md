@@ -67,6 +67,7 @@ Social media generates billions of emotional signals every day — but raw data 
 | **[PapaParse 5.4.1](https://www.papaparse.com/)** | In-browser CSV parsing — no backend needed |
 | **[Google Fonts](https://fonts.google.com/)** | Syne (headings) · DM Mono (data labels) · DM Sans (body) |
 | **GitHub Pages** | Free live hosting and public deployment |
+| **Microsoft Excel** | Dataset Cleaning and Basic Visualisation|
 
 > **No npm. No frameworks. No backend. No build tools.**
 > Everything runs entirely in the browser — zero installation required for judges.
@@ -179,28 +180,6 @@ This ensures any judge reading the dashboard understands the full story instantl
 
 ---
 
-## 📋 Submission Checklist
-
-- [x] GitHub repository (public) — [github.com/arunp061106/Sentiment-Scope](https://github.com/arunp061106/Sentiment-Scope)
-- [x] Live dashboard link — [https://arunp061106.github.io/Sentiment-Scope/](https://arunp061106.github.io/Sentiment-Scope/)
-- [x] README with dataset, problem statement, tools, overview, and insights
-- [x] Clean repository structure with all working files included
-- [ ] Presentation (PDF/PPT — max 6 slides) ← upload before deadline
-
----
-
-## 📊 Evaluation Alignment
-
-| Criteria | Weight | How This Submission Addresses It |
-|---|---|---|
-| Problem Understanding | 20% | Clear problem statement with 5 guiding questions driving the entire analysis |
-| Dashboard Clarity | 25% | Auto headline + 10-second story rule; every chart has one clear purpose |
-| Insight Quality | 25% | 7 data-backed insights with specific numbers and pattern explanations |
-| Design Simplicity | 15% | Dark editorial theme; consistent colour language (green=positive, red=negative, amber=neutral) |
-| GitHub Organization | 15% | Clean 5-file structure; detailed README; public repo; live GitHub Pages deployment |
-
----
-
 ## 👤 Participant
 
 **Name:** Arun karthick  P
@@ -220,7 +199,7 @@ This ensures any judge reading the dashboard understands the full story instantl
 
 ---
 
-*SentimentScope v1.0 · Built in 24 hours · DND Data nDreads 2024 · MIT License*
+*SentimentScope v1.0 · Built in 24 hours · DND Data nDreads 2026 · MIT License*
 
 ---
 
