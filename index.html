@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>SentimentScope — DND Data nDreads</title>
+  <meta name="description" content="Live social media emotion intelligence dashboard by DND Data nDreads. Analyze sentiment across Twitter, Instagram, and Facebook." />
+  <link rel="stylesheet" href="style.css" />
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.4.1/papaparse.min.js"></script>
+</head>
+<body>
+
+  <!-- ═══ BACKGROUND ═══ -->
+  <div class="bg-canvas" aria-hidden="true">
+    <div class="orb orb-1"></div>
+    <div class="orb orb-2"></div>
+    <div class="orb orb-3"></div>
+    <div class="orb orb-4"></div>
+  </div>
+
+  <!-- ═══ HEADER ═══ -->
+  <header class="site-header">
+    <div class="header-left">
+      <div class="logo-mark">SS</div>
+      <div>
+        <h1 class="site-title">SentimentScope</h1>
+        <p class="site-sub">Social Media Emotion Intelligence · DND Data nDreads</p>
+      </div>
+    </div>
+    <div class="header-right">
+      <div class="live-badge">
+        <span class="pulse-dot"></span>
+        LIVE ANALYSIS
+      </div>
+      <div class="stat-pill" id="total-posts">— Posts</div>
+    </div>
+  </header>
+
+  <!-- ═══ HERO STRIP ═══ -->
+  <section class="hero-strip">
+    <div class="kpi-card" id="kpi-positive">
+      <div class="kpi-icon">😊</div>
+      <div class="kpi-val" data-target="0">0%</div>
+      <div class="kpi-label">Positive Mood</div>
+    </div>
+    <div class="kpi-divider"></div>
+    <div class="kpi-card" id="kpi-avg-likes">
+      <div class="kpi-icon">❤️</div>
+      <div class="kpi-val" data-target="0">0</div>
+      <div class="kpi-label">Avg Likes</div>
+    </div>
+    <div class="kpi-divider"></div>
+    <div class="kpi-card" id="kpi-platforms">
+      <div class="kpi-icon">📡</div>
+      <div class="kpi-val">3</div>
+      <div class="kpi-label">Platforms</div>
+    </div>
+    <div class="kpi-divider"></div>
+    <div class="kpi-card" id="kpi-countries">
+      <div class="kpi-icon">🌍</div>
+      <div class="kpi-val" data-target="0">0</div>
+      <div class="kpi-label">Countries</div>
+    </div>
+    <div class="kpi-divider"></div>
+    <div class="kpi-card" id="kpi-peak-hour">
+      <div class="kpi-icon">⏰</div>
+      <div class="kpi-val">—</div>
+      <div class="kpi-label">Peak Hour</div>
+    </div>
+  </section>
+
+  <!-- ═══ FILTERS ═══ -->
+  <section class="filter-bar">
+    <div class="filter-group">
+      <label>Platform</label>
+      <div class="btn-group" id="platform-filter">
+        <button class="filter-btn active" data-val="All">All</button>
+        <button class="filter-btn" data-val="Twitter">Twitter</button>
+        <button class="filter-btn" data-val="Instagram">Instagram</button>
+        <button class="filter-btn" data-val="Facebook">Facebook</button>
+      </div>
+    </div>
+    <div class="filter-group">
+      <label>Country</label>
+      <select id="country-filter" class="select-box">
+        <option value="All">All Countries</option>
+      </select>
+    </div>
+    <div class="filter-group">
+      <label>Month</label>
+      <select id="month-filter" class="select-box">
+        <option value="All">All Months</option>
+        <option value="1">January</option><option value="2">February</option>
+        <option value="3">March</option><option value="4">April</option>
+        <option value="5">May</option><option value="6">June</option>
+        <option value="7">July</option><option value="8">August</option>
+        <option value="9">September</option><option value="10">October</option>
+        <option value="11">November</option><option value="12">December</option>
+      </select>
+    </div>
+    <div class="filter-group">
+      <button class="reset-btn" id="reset-filters">↺ Reset</button>
+    </div>
+  </section>
+
+  <!-- ═══ STORY HEADLINE ═══ -->
+  <div class="story-headline" id="story-headline">
+    <span class="headline-icon">📖</span>
+    <span id="headline-text">Loading the data story…</span>
+  </div>
+
+  <!-- ═══ MAIN GRID ═══ -->
+  <main class="dashboard-grid">
+
+    <div class="card card--wide scroll-reveal" id="card-sentiment-bar">
+      <div class="card-header">
+        <h2>Sentiment Breakdown</h2>
+        <span class="card-badge">Top 10 emotions</span>
+      </div>
+      <div class="chart-wrap">
+        <canvas id="sentimentBar"></canvas>
+      </div>
+    </div>
+
+    <div class="card scroll-reveal" id="card-donut">
+      <div class="card-header">
+        <h2>Platform Split</h2>
+        <span class="card-badge">By volume</span>
+      </div>
+      <div class="chart-wrap chart-wrap--sq">
+        <canvas id="platformDonut"></canvas>
+      </div>
+    </div>
+
+    <div class="card scroll-reveal" id="card-mood-gauge">
+      <div class="card-header">
+        <h2>Mood Index</h2>
+        <span class="card-badge">Positivity score</span>
+      </div>
+      <div class="gauge-wrap">
+        <canvas id="moodGauge"></canvas>
+        <div class="gauge-center-text" id="gauge-pct">0%</div>
+      </div>
+      <div class="mood-legend">
+        <span class="mood-neg">Negative</span>
+        <span class="mood-pos">Positive</span>
+      </div>
+    </div>
+
+    <div class="card card--wide scroll-reveal" id="card-timeline">
+      <div class="card-header">
+        <h2>Monthly Post Volume</h2>
+        <span class="card-badge">Trend over time</span>
+      </div>
+      <div class="chart-wrap">
+        <canvas id="timelineChart"></canvas>
+      </div>
+    </div>
+
+    <div class="card scroll-reveal" id="card-country">
+      <div class="card-header">
+        <h2>Top Countries</h2>
+        <span class="card-badge">Geo distribution</span>
+      </div>
+      <div class="country-list" id="country-list"></div>
+    </div>
+
+    <div class="card scroll-reveal" id="card-heatmap">
+      <div class="card-header">
+        <h2>Hourly Activity</h2>
+        <span class="card-badge">Posts by hour</span>
+      </div>
+      <div class="heatmap-wrap" id="heatmap-wrap"></div>
+    </div>
+
+    <div class="card scroll-reveal" id="card-platform-sentiment">
+      <div class="card-header">
+        <h2>Platform × Sentiment</h2>
+        <span class="card-badge">Stacked view</span>
+      </div>
+      <div class="chart-wrap">
+        <canvas id="platformSentimentBar"></canvas>
+      </div>
+    </div>
+
+    <div class="card card--full scroll-reveal" id="card-feed">
+      <div class="card-header">
+        <h2>Live Post Feed</h2>
+        <span class="card-badge" id="feed-count">— posts</span>
+        <input type="text" id="feed-search" class="feed-search" placeholder="🔍  Search posts…" />
+      </div>
+      <div class="feed-grid" id="feed-grid"></div>
+    </div>
+
+  </main>
+
+  <!-- ═══ FOOTER ═══ -->
+  <footer class="site-footer">
+    <span>Built for <strong>DND Data nDreads</strong> · 732 social posts · Jan–Oct 2023</span>
+    <span class="footer-right">SentimentScope v2.0</span>
+  </footer>
+
+  <script src="app.js"></script>
+</body>
+</html>
