@@ -1,4 +1,5 @@
 # 🖤 SentimentScope
+##DND Data n Dreads Hackathon Winner 🏆
 ### Social Media Emotion Intelligence Dashboard
 **DND Data Arena: 24-Hour Dashboard Sprint · 2024**
 
